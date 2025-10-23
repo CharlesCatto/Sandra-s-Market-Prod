@@ -3,7 +3,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "dev": "tsx watch --clear-screen=false ./src/main.ts",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "start": "node dist/main.js",
     "migrate": "tsx ./bin/migrate.ts",
     "seed": "tsx ./bin/seed.ts",
