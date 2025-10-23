@@ -1,6 +1,6 @@
-import sandraImage from "/public/img/sandra.png";
-import edgarImage from "/public/img/edgar.png";
-import cookieImage from "/public/img/cookie.jpg";
+import sandraImage from "../../../public/img/sandra.png";
+import oscarImage from "../../../public/img/oscar.png";
+import biscuitImage from "../../../public/img/biscuit.jpg";
 import styles from "./About.module.css";
 import SnowEffect from "./SnowEffect";
 import Dog from "./Dog/Dog";
@@ -34,19 +34,19 @@ function About() {
         </div>
       </div>
 
-      {/* Carte Edgar */}
+      {/* Carte Oscar */}
       <div className={`${styles.card} ${styles.edgarCard}`}>
         <div className={styles.imageContainer}>
           <img
-            src={edgarImage}
-            alt="Edgar, the French Bulldog"
+            src={oscarImage}
+            alt="Oscar, the French Bulldog"
             className={styles.cardImage}
           />
         </div>
         <div className={styles.textContainer}>
-          <h2>Meet Edgar</h2>
+          <h2>Meet Oscar</h2>
           <p>
-            Edgar, Sandra's adorable French Bulldog, is a big fan of Christmas
+            Oscar, Sandra's adorable French Bulldog, is a big fan of Christmas
             too! He loves wearing his festive hat and spreading holiday cheer
             wherever he goes. Just say Christmas and watch his tail going
             crazy!!
@@ -54,20 +54,20 @@ function About() {
         </div>
       </div>
 
-      {/* Carte Cookie */}
-      <div className={`${styles.card} ${styles.cookieCard}`}>
+      {/* Carte Biscuit */}
+      <div className={`${styles.card} ${styles.biscuitCard}`}>
         <div className={styles.imageContainer}>
           <img
-            src={cookieImage}
-            alt="Cookie, the Dog"
+            src={biscuitImage}
+            alt="Biscuit, the Dog"
             className={styles.cardImage}
           />
         </div>
         <div className={styles.textContainer}>
-          <h2>Meet Cookie</h2>
+          <h2>Meet Biscuit</h2>
           <p>
-            Cookie, the playful companion of Sandra, has a very sweet nature. He
-            loves cuddles and has a special affinity for snow. In fact, every
+            Biscuit, the playful companion of Sandra, has a very sweet nature.
+            He loves cuddles and has a special affinity for snow. In fact, every
             winter, he gets excited as soon as the first snowflake falls, and he
             loves to run around in the cold, watching the world turn white.
           </p>

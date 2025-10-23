@@ -81,13 +81,13 @@
   transform: translate(-50%, -50%) rotate(5deg);
 }
 
-.edgarCard {
+.oscarCard {
   top: 20%;
   left: 10%;
   transform: rotate(-5deg);
 }
 
-.cookieCard {
+.biscuitCard {
   top: 20%;
   right: 10%;
   transform: rotate(10deg);
@@ -103,8 +103,8 @@
   }
 
   .sandraCard,
-  .edgarCard,
-  .cookieCard {
+  .oscarCard,
+  .biscuitCard {
     top: auto;
     left: auto;
     right: auto;
