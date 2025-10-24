@@ -35,7 +35,7 @@ function About() {
       </div>
 
       {/* Carte Oscar */}
-      <div className={`${styles.card} ${styles.edgarCard}`}>
+      <div className={`${styles.card} ${styles.oscarCard}`}>
         <div className={styles.imageContainer}>
           <img
             src={oscarImage}

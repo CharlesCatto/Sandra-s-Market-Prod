@@ -76,26 +76,26 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
 
   const fetchMarkets = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/markets");
+      const API_BASE_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:3001";
+      const response = await fetch(`${API_BASE_URL}/api/markets`);
+
       if (!response.ok) {
         throw new Error(`Failed to fetch markets: ${response.statusText}`);
       }
 
       const data = await response.json();
       console.info("API Response:", data);
-      console.info("Type of data:", typeof data);
-      console.info("Is array?", Array.isArray(data));
 
-      // Assure-toi que c'est un tableau
       if (Array.isArray(data)) {
         setMarkets(data);
       } else {
         console.error("Expected array but got:", data);
-        setMarkets([]); // Fallback à un tableau vide
+        setMarkets([]);
       }
     } catch (error) {
       console.error("Failed to fetch markets:", error);
-      setMarkets([]); // Fallback en cas d'erreur
+      setMarkets([]);
     }
   };
 
@@ -134,7 +134,9 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/markets", {
+      const API_BASE_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:3001";
+      const response = await fetch(`${API_BASE_URL}/api/markets`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMarketData),
@@ -146,7 +148,6 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
 
       const data: ChristmasMarket = await response.json();
 
-      // Plus besoin de parsing puisque le type est maintenant correct
       setMarkets((prevMarkets) => [...prevMarkets, data]);
       resetForm();
     } catch (error) {
