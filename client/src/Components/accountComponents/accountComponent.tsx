@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Envelope from "../../../public/img/envelope.png";
+import Envelope from "../../../assets/img/envelope.png";
 import { useData } from "../../contexts/DataContext";
 import api from "../../helpers/api";
 import styles from "./accountComponent.module.css";

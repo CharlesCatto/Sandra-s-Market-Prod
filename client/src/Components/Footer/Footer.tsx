@@ -1,72 +1,12 @@
-// import styles from "./Footer.module.css";
-// import facebook from "/public/img/facebook.png";
-// import facebookYellow from "/public/img/facebookYellow.png";
-// import instagram from "/public/img/instagram.png";
-// import instagramYellow from "/public/img/instagramYellow.png";
-// import linkedin from "/public/img/linkedin.png";
-// import linkedinYellow from "/public/img/linkedinYellow.png";
-// import twitter from "/public/img/twitter.png";
-// import twitterYellow from "/public/img/twitterYellow.png";
-
-// function Footer() {
-//   return (
-//     <section>
-//       <footer className={styles.footer}>
-//         <div className={styles.container_icon}>
-//           <a href="_">
-//             <img
-//               src={facebook}
-//               alt="icon facebook"
-//               className={styles.social_icon}
-//               onMouseEnter={(e) => (e.currentTarget.src = facebookYellow)}
-//               onMouseLeave={(e) => (e.currentTarget.src = facebook)}
-//             />
-//           </a>
-//           <a href="_">
-//             <img
-//               src={instagram}
-//               alt="icon instagram"
-//               className={styles.social_icon}
-//               onMouseEnter={(e) => (e.currentTarget.src = instagramYellow)}
-//               onMouseLeave={(e) => (e.currentTarget.src = instagram)}
-//             />
-//           </a>
-//           <a href="_">
-//             <img
-//               src={linkedin}
-//               alt="icon linkedin"
-//               className={styles.social_icon}
-//               onMouseEnter={(e) => (e.currentTarget.src = linkedinYellow)}
-//               onMouseLeave={(e) => (e.currentTarget.src = linkedin)}
-//             />
-//           </a>
-//           <a href="_">
-//             <img
-//               src={twitter}
-//               alt="icon twitter"
-//               className={styles.social_icon}
-//               onMouseEnter={(e) => (e.currentTarget.src = twitterYellow)}
-//               onMouseLeave={(e) => (e.currentTarget.src = twitter)}
-//             />
-//           </a>
-//         </div>
-//         <p className={styles.creators}>Sandra's Market @2025</p>
-//       </footer>
-//     </section>
-//   );
-// }
-
-// export default Footer;
-
 import styles from "./Footer.module.css";
-import facebook from "/public/img/facebook.png";
-import facebookYellow from "/public/img/facebookYellow.png";
-import instagram from "/public/img/instagram.png";
-import instagramYellow from "/public/img/instagramYellow.png";
-import linkedin from "/public/img/linkedin.png";
-import linkedinYellow from "/public/img/linkedinYellow.png";
-import twitter from "/public/img/twitter.png";
-import twitterYellow from "/public/img/twitterYellow.png";
+import facebook from "../../assets/img/facebook.png";
+import facebookYellow from "../../assets/img/facebookYellow.png";
+import instagram from "../../assets/img/instagram.png";
+import instagramYellow from "../../assets/img/instagramYellow.png";
+import linkedin from "../../assets/img/linkedin.png";
+import linkedinYellow from "../../assets/img/linkedinYellow.png";
+import twitter from "../../assets/img/twitter.png";
+import twitterYellow from "../../assets/img/twitterYellow.png";
 
 function Footer() {
   const handleMouseEnter = (

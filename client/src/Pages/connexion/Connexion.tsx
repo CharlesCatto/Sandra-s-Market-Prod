@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import api from "../../helpers/api";
 import { errorToast, successToast } from "../../services/toast";
 import styles from "./Connexion.module.css";
-import christmasClothing from "../../../public/img/christmas-clothing.png";
+import christmasClothing from "../../assets/img/christmas-clothing.png";
 
 // Interfaces pour typer les réponses de l'API
 interface LoginResponse {

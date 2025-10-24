@@ -1,6 +1,6 @@
 import styles from "./Blog.module.css";
-import BGBlog from "../../../public/img/BGblog.png";
-import Hammer from "../../../public/img/hammer.svg"; // Assure-toi que l'image est bien là
+import BGBlog from "../../assets/img/BGblog.png";
+import Hammer from "../../assets/img/hammer.svg";
 
 const Blog = () => {
   return (

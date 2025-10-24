@@ -13,8 +13,8 @@ import styles from "./Map.module.css";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 import React from "react";
-import pinMapIcon from "../../../public/img/pinMap.svg";
-import searchIcon from "../../../public/img/search.svg";
+import pinMapIcon from "../../assets/img/pinMap.svg";
+import searchIcon from "../../assets/img/search.svg";
 import type { ChristmasMarket } from "../../types/marker";
 import { useAuth } from "../../contexts/AuthContext";
 

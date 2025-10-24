@@ -1,4 +1,5 @@
 import styles from "./Home.module.css";
+import christmasVideo from "../../assets/img/christmasMarket.mp4";
 
 const Home = () => {
   return (
@@ -14,7 +15,7 @@ const Home = () => {
           disablePictureInPicture
           controlsList="nodownload noplaybackrate nofullscreen"
         >
-          <source src="../../public/img/christmasMarket.mp4" type="video/mp4" />
+          <source src={christmasVideo} type="video/mp4" />
         </video>
         {/* Shadow overlay */}
         <div className={styles.shadow} />

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import styles from "./NavBar.module.css";
-import logo from "../../public/img/christmas-market-logo.png";
+import logo from "../assets/img/christmas-market-logo.png";
 
 function NavBar() {
   const [click, setClick] = React.useState(false);

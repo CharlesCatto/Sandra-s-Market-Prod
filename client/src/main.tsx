@@ -5,12 +5,11 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import Contact from "./Pages/Contact/Contact";
 import Blog from "./Pages/Blog/Blog";
-// import NotFound from "./Pages/NotFound";
 import NotFound from "./Pages/Notfound/NotFound";
 import MapPage from "./Pages/Map/Map";
 import Connexion from "./Pages/connexion/Connexion";
-import { AuthProvider } from "./contexts/AuthContext"; // Import AuthProvider
-import { DataProvider } from "./contexts/DataContext"; // Import DataProvider
+import { AuthProvider } from "./contexts/AuthContext";
+import { DataProvider } from "./contexts/DataContext";
 
 const router = createBrowserRouter([
   {
