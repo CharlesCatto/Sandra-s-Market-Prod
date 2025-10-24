@@ -44,7 +44,7 @@ function About() {
           />
         </div>
         <div className={styles.textContainer}>
-          <h2>Meet Oscar</h2>
+          <h2>Meet Osca</h2>
           <p>
             Oscar, Sandra's adorable French Bulldog, is a big fan of Christmas
             too! He loves wearing his festive hat and spreading holiday cheer
