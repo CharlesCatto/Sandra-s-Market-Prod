@@ -16,9 +16,8 @@ import React from "react";
 import pinMapIcon from "../../assets/img/pinMap.svg";
 import searchIcon from "../../assets/img/search.svg";
 import { useAuth } from "../../contexts/AuthContext";
-import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
 import { useChristmasMarkets } from "../../hooks/useChristmasMarkets";
-import ChristmasLoader from "../../components/ChristmasLoader/ChristmasLoader";
+import ChristmasLoader from "../../Components/ChristmasLoader/ChristmasLoader"; // ✅ Correction du chemin
 
 const customIcon = new L.Icon({
   iconUrl: pinMapIcon,

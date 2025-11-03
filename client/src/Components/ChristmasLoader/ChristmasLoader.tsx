@@ -20,8 +20,19 @@ const christmasItems = [
   { image: giftImage, name: "gift", animation: styles.giftAnimation },
 ];
 
+// Générer des IDs uniques pour les flocons de neige
+const generateSnowflakes = (count: number) => {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `snowflake-${index}-${Date.now()}-${Math.random()}`,
+    left: `${Math.random() * 100}%`,
+    animationDelay: `${Math.random() * 5}s`,
+    animationDuration: `${5 + Math.random() * 10}s`,
+  }));
+};
+
 const ChristmasLoader = () => {
   const [currentItem, setCurrentItem] = useState(0);
+  const [snowflakes, setSnowflakes] = useState(() => generateSnowflakes(20));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,6 +40,11 @@ const ChristmasLoader = () => {
     }, 2000); // Change toutes les 2 secondes
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Régénérer les flocons si le composant est remonté
+  useEffect(() => {
+    setSnowflakes(generateSnowflakes(20));
   }, []);
 
   const item = christmasItems[currentItem];
@@ -40,14 +56,14 @@ const ChristmasLoader = () => {
       </div>
       <p className={styles.loadingText}>Loading Christmas Markets...</p>
       <div className={styles.snowflakes}>
-        {[...Array(20)].map((_, i) => (
+        {snowflakes.map((snowflake) => (
           <div
-            key={i}
+            key={snowflake.id}
             className={styles.snowflake}
             style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${5 + Math.random() * 10}s`,
+              left: snowflake.left,
+              animationDelay: snowflake.animationDelay,
+              animationDuration: snowflake.animationDuration,
             }}
           >
             ❄
