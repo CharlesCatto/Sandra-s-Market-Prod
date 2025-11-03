@@ -1,0 +1,161 @@
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.christmasItem {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.itemImage {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+}
+
+/* Animations spécifiques pour chaque item */
+.starAnimation {
+  animation: starGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes starGlow {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 10px gold);
+  }
+  100% {
+    transform: scale(1.2) rotate(180deg);
+    filter: drop-shadow(0 0 30px gold);
+  }
+}
+
+.santaAnimation {
+  animation: santaBounce 2s ease-in-out infinite;
+}
+
+@keyframes santaBounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+.pineAnimation {
+  animation: pineSwing 3s ease-in-out infinite;
+}
+
+@keyframes pineSwing {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.snowflakeAnimation {
+  animation: snowflakeSpin 4s linear infinite;
+}
+
+@keyframes snowflakeSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.giftAnimation {
+  animation: giftShake 2s ease-in-out infinite;
+}
+
+@keyframes giftShake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-10px) rotate(-5deg);
+  }
+  75% {
+    transform: translateX(10px) rotate(5deg);
+  }
+}
+
+.loadingText {
+  font-family: "Georgia", serif;
+  color: white;
+  font-size: 1.8rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Effet de neige qui tombe */
+.snowflakes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: white;
+  font-size: 1.5rem;
+  opacity: 0.8;
+  animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}

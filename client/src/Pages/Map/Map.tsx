@@ -11,12 +11,14 @@ import "leaflet/dist/leaflet.css";
 import "./leaflet.css";
 import styles from "./Map.module.css";
 import L from "leaflet";
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import React from "react";
 import pinMapIcon from "../../assets/img/pinMap.svg";
 import searchIcon from "../../assets/img/search.svg";
-import type { ChristmasMarket } from "../../types/marker";
 import { useAuth } from "../../contexts/AuthContext";
+import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
+import { useChristmasMarkets } from "../../hooks/useChristmasMarkets";
+import ChristmasLoader from "../../components/ChristmasLoader/ChristmasLoader";
 
 const customIcon = new L.Icon({
   iconUrl: pinMapIcon,
@@ -32,8 +34,8 @@ interface MapsProps {
 
 function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
   const { user } = useAuth();
+  const { markets, loading, error, refetch } = useChristmasMarkets();
   const [isAddingMarket, setIsAddingMarket] = useState(false);
-  const [markets, setMarkets] = useState<ChristmasMarket[]>([]);
   const [newMarketPosition, setNewMarketPosition] = useState<
     [number, number] | null
   >(null);
@@ -62,53 +64,43 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
   >("none");
   const [usualDays, setUsualDays] = useState<string[]>([]);
 
-  useEffect(() => {
-    fetchMarkets();
-  }, []);
-
-  const handleAddMarketButtonClick = () => {
+  const handleAddMarketButtonClick = useCallback(() => {
     if (!user) {
       alert("Vous devez être connecté pour ajouter un marché.");
       return;
     }
     setIsAddingMarket((prev) => !prev);
-  };
+  }, [user]);
 
-  const fetchMarkets = async () => {
-    try {
-      const API_BASE_URL =
-        import.meta.env.VITE_API_URL || "http://localhost:3001";
-      const response = await fetch(`${API_BASE_URL}/api/markets`);
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch markets: ${response.statusText}`);
+  const handleMapClick = useCallback(
+    (e: LeafletMouseEvent) => {
+      if (isAddingMarket && user) {
+        const { lat, lng } = e.latlng;
+        setNewMarketPosition([lat, lng]);
+        setIsModalOpen(true);
+        setIsAddingMarket(false);
       }
+    },
+    [isAddingMarket, user],
+  );
 
-      const data = await response.json();
-      console.info("API Response:", data);
+  const resetForm = useCallback(() => {
+    setIsModalOpen(false);
+    setNewMarketPosition(null);
+    setName("");
+    setAddress("");
+    setNumberOfExponents(0);
+    setNumberOfCraftsmen(0);
+    setPlaceType("");
+    setAnimationType([]);
+    setAnimalsForbidden(false);
+    setExposition(false);
+    setSantaPresent(false);
+    setRestauration("none");
+    setUsualDays([]);
+  }, []);
 
-      if (Array.isArray(data)) {
-        setMarkets(data);
-      } else {
-        console.error("Expected array but got:", data);
-        setMarkets([]);
-      }
-    } catch (error) {
-      console.error("Failed to fetch markets:", error);
-      setMarkets([]);
-    }
-  };
-
-  const handleMapClick = (e: LeafletMouseEvent) => {
-    if (isAddingMarket && user) {
-      const { lat, lng } = e.latlng;
-      setNewMarketPosition([lat, lng]);
-      setIsModalOpen(true);
-      setIsAddingMarket(false);
-    }
-  };
-
-  const handleModalSubmit = async () => {
+  const handleModalSubmit = useCallback(async () => {
     if (!name || !address || !newMarketPosition) {
       alert("Please fill in all required fields.");
       return;
@@ -116,10 +108,7 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
 
     const newMarketData = {
       name,
-      location: {
-        x: newMarketPosition[0],
-        y: newMarketPosition[1],
-      },
+      location: { x: newMarketPosition[0], y: newMarketPosition[1] },
       address,
       number_of_exponents: numberOfExponents,
       number_of_craftsmen: numberOfCraftsmen,
@@ -135,61 +124,77 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
 
     try {
       const API_BASE_URL =
-        import.meta.env.VITE_API_URL || "http://localhost:3001";
+        import.meta.env.VITE_API_URL ||
+        "https://sandra-s-market-prod-backend.onrender.com";
       const response = await fetch(`${API_BASE_URL}/api/markets`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMarketData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to save market");
-      }
+      if (!response.ok) throw new Error("Failed to save market");
 
-      const data: ChristmasMarket = await response.json();
-
-      setMarkets((prevMarkets) => [...prevMarkets, data]);
+      await response.json();
+      refetch();
       resetForm();
     } catch (error) {
       console.error("Failed to save market:", error);
       alert("Failed to save market. Please try again.");
     }
-  };
+  }, [
+    name,
+    address,
+    newMarketPosition,
+    numberOfExponents,
+    numberOfCraftsmen,
+    placeType,
+    animationType,
+    animalsForbidden,
+    exposition,
+    santaPresent,
+    restauration,
+    usualDays,
+    user?.id,
+    refetch,
+    resetForm,
+  ]);
 
-  const resetForm = () => {
-    setIsModalOpen(false);
-    setNewMarketPosition(null);
-    setName("");
-    setAddress("");
-    setNumberOfExponents(0);
-    setNumberOfCraftsmen(0);
-    setPlaceType("");
-    setAnimationType([]);
-    setAnimalsForbidden(false);
-    setExposition(false);
-    setSantaPresent(false);
-    setRestauration("none");
-    setUsualDays([]);
-  };
-
-  const toggleSearchMode = () => {
+  const toggleSearchMode = useCallback(() => {
     setIsSearchMode((prev) => !prev);
-  };
+  }, []);
 
-  const handleDaySelection = (day: string) => {
-    setSelectedDays((prevDays) => {
-      return prevDays.includes(day)
+  const handleDaySelection = useCallback((day: string) => {
+    setSelectedDays((prevDays) =>
+      prevDays.includes(day)
         ? prevDays.filter((d) => d !== day)
-        : [...prevDays, day];
-    });
-  };
+        : [...prevDays, day],
+    );
+  }, []);
 
-  const handleFilterSelection = (filter: keyof typeof selectedFilters) => {
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      [filter]: !prevFilters[filter],
-    }));
-  };
+  const handleFilterSelection = useCallback(
+    (filter: keyof typeof selectedFilters) => {
+      setSelectedFilters((prevFilters) => ({
+        ...prevFilters,
+        [filter]: !prevFilters[filter],
+      }));
+    },
+    [],
+  );
+
+  if (loading) {
+    return <ChristmasLoader />;
+  }
+
+  if (error) {
+    return (
+      <div className={styles.errorContainer}>
+        <p>Erreur: {error}</p>
+        <button type="button" onClick={refetch} className={styles.retryButton}>
+          Réessayer
+        </button>
+      </div>
+    );
+  }
 
   const filteredMarkets = Array.isArray(markets)
     ? markets.filter((market) => {
@@ -555,7 +560,9 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
 
 const MapClickHandler = ({
   onClick,
-}: { onClick: (e: LeafletMouseEvent) => void }) => {
+}: {
+  onClick: (e: LeafletMouseEvent) => void;
+}) => {
   useMapEvent("click", onClick);
   return null;
 };
