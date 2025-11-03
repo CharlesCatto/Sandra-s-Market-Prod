@@ -17,7 +17,8 @@ import pinMapIcon from "../../assets/img/pinMap.svg";
 import searchIcon from "../../assets/img/search.svg";
 import { useAuth } from "../../contexts/AuthContext";
 import { useChristmasMarkets } from "../../hooks/useChristmasMarkets";
-import ChristmasLoader from "../../Components/ChristmasLoader/ChristmasLoader"; // ✅ Correction du chemin
+import ChristmasLoader from "../../Components/ChristmasLoader/ChristmasLoader";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 const customIcon = new L.Icon({
   iconUrl: pinMapIcon,
@@ -25,6 +26,14 @@ const customIcon = new L.Icon({
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
 });
+
+const createClusterCustomIcon = (cluster: any) => {
+  return L.divIcon({
+    html: `<div style="background-color: #1b263b; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border: 3px solid #ffd700;">${cluster.getChildCount()}</div>`,
+    className: "custom-cluster-icon",
+    iconSize: L.point(40, 40, true),
+  });
+};
 
 interface MapsProps {
   center?: [number, number];
@@ -322,64 +331,73 @@ function Maps({ center = [48.8566, 2.3522], zoom = 6 }: MapsProps) {
           />
           <MapClickHandler onClick={handleMapClick} />
 
-          {filteredMarkets.map((market) => (
-            <Marker
-              key={market.id}
-              position={[market.location.x, market.location.y]}
-              icon={customIcon}
-            >
-              <Popup className={styles.customPopup}>
-                <h3>{market.name}</h3>
-                <p>
-                  <strong>Address:</strong> {market.address}
-                </p>
-                <p>
-                  <strong>Exponents:</strong> {market.number_of_exponents}
-                </p>
-                <p>
-                  <strong>Craftsmen:</strong> {market.number_of_craftsmen}
-                </p>
-                <p>
-                  <strong>Place Type:</strong> {market.place_type}
-                </p>
-                <p>
-                  <strong>Animations:</strong>{" "}
-                  {market.animation_type?.join(", ") || "None"}
-                </p>
-                <p>
-                  <strong>Restauration:</strong> {market.restauration}
-                </p>
-                <p>
-                  <strong>Animals Allowed:</strong>{" "}
-                  {market.animals_forbidden ? (
-                    <span className={styles.forbiddenIcon}>🚫🐾 Forbidden</span>
-                  ) : (
-                    <span className={styles.pawIcon}>🐾 Allowed</span>
-                  )}
-                </p>
-                <p>
-                  <strong>Exposition:</strong>{" "}
-                  {market.exposition ? "Yes" : "No"}
-                </p>
-                <p>
-                  <strong>Santa Present:</strong>{" "}
-                  {market.santa_present ? "Yes" : "No"}
-                </p>
-                <p>
-                  <strong>Usual Days:</strong>{" "}
-                  {market.usual_days?.length
-                    ? market.usual_days.join(", ")
-                    : "None"}
-                </p>
-              </Popup>
-            </Marker>
-          ))}
+          <MarkerClusterGroup
+            iconCreateFunction={createClusterCustomIcon}
+            maxClusterRadius={50}
+            chunkedLoading
+          >
+            {filteredMarkets.map((market) => (
+              <Marker
+                key={market.id}
+                position={[market.location.x, market.location.y]}
+                icon={customIcon}
+              >
+                <Popup className={styles.customPopup}>
+                  <h3>{market.name}</h3>
+                  <p>
+                    <strong>Address:</strong> {market.address}
+                  </p>
+                  <p>
+                    <strong>Exponents:</strong> {market.number_of_exponents}
+                  </p>
+                  <p>
+                    <strong>Craftsmen:</strong> {market.number_of_craftsmen}
+                  </p>
+                  <p>
+                    <strong>Place Type:</strong> {market.place_type}
+                  </p>
+                  <p>
+                    <strong>Animations:</strong>{" "}
+                    {market.animation_type?.join(", ") || "None"}
+                  </p>
+                  <p>
+                    <strong>Restauration:</strong> {market.restauration}
+                  </p>
+                  <p>
+                    <strong>Animals Allowed:</strong>{" "}
+                    {market.animals_forbidden ? (
+                      <span className={styles.forbiddenIcon}>
+                        🚫🐾 Forbidden
+                      </span>
+                    ) : (
+                      <span className={styles.pawIcon}>🐾 Allowed</span>
+                    )}
+                  </p>
+                  <p>
+                    <strong>Exposition:</strong>{" "}
+                    {market.exposition ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <strong>Santa Present:</strong>{" "}
+                    {market.santa_present ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <strong>Usual Days:</strong>{" "}
+                    {market.usual_days?.length
+                      ? market.usual_days.join(", ")
+                      : "None"}
+                  </p>
+                </Popup>
+              </Marker>
+            ))}
 
-          {newMarketPosition && (
-            <Marker position={newMarketPosition} icon={customIcon}>
-              <Popup>New Market</Popup>
-            </Marker>
-          )}
+            {newMarketPosition && (
+              <Marker position={newMarketPosition} icon={customIcon}>
+                <Popup>New Market</Popup>
+              </Marker>
+            )}
+          </MarkerClusterGroup>
+
           <AdjustZoomControls />
         </MapContainer>
       </div>
